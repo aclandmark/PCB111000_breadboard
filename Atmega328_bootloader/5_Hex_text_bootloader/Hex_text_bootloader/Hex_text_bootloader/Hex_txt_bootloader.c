@@ -101,27 +101,24 @@ EEPROM reservations:
 char mode;													//'h' for hex file, 't' for text file
 
 int main (void){ 											//Loaded at address 0x7000, the start of the bootloader section
-char MCUSR_copy;
-//char eep_offset;
+//char MCUSR_copy;
 
-//CLKPR = (1 << CLKPCE);										//Pre-scaler control: convert 16MHZ crystal to 8MHz clock
-//CLKPR = (1 << CLKPS0);
 
+if(!(MCUSR & 2)) asm("jmp 0x0000");
+
+/*
 MCUSR_copy = MCUSR;											//Save MCUSR in MCUSR_copy
 if (eeprom_read_byte((uint8_t*)0x3FC) & 0x80)				//Verification routines set bit 7 of EEPROM 0x3FC
 MCUSR_copy |= 0x80;											//Make bit 7 of MCUSR_copy the same as bit 7 of EEPROM 0x3FC
-
-
-
 if(!(eeprom_read_byte((uint8_t*)0x3F7)))
 {eeprom_write_byte((uint8_t*)0x3FC, (1 << EXTRF));			//Save MCUSR in EEPROM 0x3FC for use by App (clears bit 7).
 eeprom_write_byte((uint8_t*)0x3F7, 0xFF);}
 else eeprom_write_byte((uint8_t*)0x3FC, MCUSR);
+*/
 
+//MCUSR = 0;													//Clear all reset flags
 
-MCUSR = 0;													//Clear all reset flags
-
-
+/*
 switch(MCUSR_copy){
 case 2:														//Ext reset: Set by PCB_A programmer or single/double click of PC_A reset switch
 case 0x88: break;											//WDTout + return from Hex/Text verification
@@ -131,43 +128,42 @@ default: 													//POR, WDTout, BOR
 		read_flash ();
 		if (Flash_readout == 0xFF)asm("jmp 0x5DE0");
 		else asm("jmp 0x0000");break;}						//WDT due to user program, POR or BOR,mode r or D which also generate a WDTout
-	
-setup_HW;													//Initialises all IO to week pull up; UART introduces 5mS delay
+*/	
+
+
+									//Initialises all IO to week pull up; UART introduces 5mS delay
 
 MCUCR = (1<<IVCE);  										//Select the interrupt vector table at the start of boot section
 MCUCR = (1<<IVSEL);
-
+Setup_HW;
 
 //For CA displays PIND6 is controlled using PCB_A PB1 which drives a segment on the display and defaults to high when the display is cleared
 //For CC displays PIND6 is controlled using PCB_A PB2 which drives a digit on the display and defaults to high when the display is cleared
 //A link on PCB_A is used to differentiate between CC and CA versions of PCB_A.
 
+hex_programmer();					//Hex file download with optional verification
+asm("jmp 0x61B0");
 
-if (!(PIND & (1 << PIND6)))								//Reset control pin.  If set low by PCB_A control passes to the user_app
+
+
+/*if (!(PIND & (1 << PIND6)))								//Reset control pin.  If set low by PCB_A control passes to the user_app
 {eeprom_write_byte((uint8_t*)0x3F7,0);
 wdt_enable(WDTO_30MS); while(1);}							  
-
 while(1){													//Returns here following programming with/without verification or 
 do{sendString("h/r      ");}								//double click of PCB_A reset switch
 while((isCharavailable(255) == 0));                        //User prompt
-
-
 switch (receiveChar()){ 
-	
-case 'r':	//Prog_mem_address_H = 0;
-			//Prog_mem_address_L = 0;
-			//read_flash ();
-			//if (Flash_readout == 0xFF)asm("jmp 0x5DE0");	//Detect the absence of an User App and run default app.
-			eeprom_write_byte((uint8_t*)0x3F7,0);			//Indicates user program is being launched using a WDTout
+case 'r':	eeprom_write_byte((uint8_t*)0x3F7,0);			//Indicates user program is being launched using a WDTout
 			wdt_enable(WDTO_15MS); 							//Run the user application (WDTout triggers jump to 0x0000)
 			while(1); 
-
-
 case 'h':	mode = 'h';hex_programmer();					//Hex file download with optional verification
 			asm("jmp 0x61B0");	
-
-
 default: 	break;}}
+*/
+
+
+
+
 
 return 1;}								                    
 
@@ -183,7 +179,8 @@ unsigned char Rx_askii_char;
 Rx_askii_char = receiveChar();
 
 //if (mode == 't') get_text(Rx_askii_char);
-if (mode == 'h') get_hex(Rx_askii_char);
+//if (mode == 'h') 
+get_hex(Rx_askii_char);
 }
  
 
@@ -211,7 +208,7 @@ prog_led_control = 0;  record_length_old=0; prog_counter = 0;		//Initialize vari
 Flash_flag = 0;  HW_address = 0;  section_break = 0; orphan = 0; 
 w_pointer = 0; r_pointer = 0; short_record=0;  cmd_counter = 0;
 
-sendString("\r\nHex_F?");
+sendString("\r\nSend UNO (Atmega328) Hex_F?");
 
 
 UCSR0B |= (1<<RXCIE0); sei();										//Receive interrupts now active
