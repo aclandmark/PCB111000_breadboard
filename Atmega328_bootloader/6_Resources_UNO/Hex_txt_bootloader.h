@@ -108,12 +108,13 @@ volatile char Rx_askii_char_old;							//Required to check for a \r\n string
 #define wdr()  __asm__ __volatile__("wdr")
 
 /**********************************************************************************/
-#define setup_HW \
+#define Setup_HW \
 config_WDT;\
 Initialise_I_O;\
-activity_leds;\
 ADMUX |= (1 << REFS0);\
 USART_init(0,16);
+
+
 
 /**********************************************************************************/
 #define config_WDT \
@@ -123,10 +124,12 @@ WDTCSR |= (1 <<WDCE) | (1<< WDE);\
 WDTCSR = 0;
 
 
+
 /**********************************************************************************/
 #define  activity_leds \
 DDRB |= (1 << DDB0);\
 LED_2_off;
+
 
 
 
@@ -139,6 +142,7 @@ r_pointer = r_pointer & 0x1F;
 #define inc_w_pointer \
 w_pointer++;\
 w_pointer = w_pointer & 0x1F;
+
 
 
 /**********************************************************************************/
@@ -154,4 +158,14 @@ DDRD = 0;\
 PORTB = 0xFF;\
 PORTC = 0xFF;\
 PORTD = 0xFF;
+
+
+
+#define OSC_CAL \
+if ((eeprom_read_byte((uint8_t*)0x3FE) > 0x0F)\
+&&  (eeprom_read_byte((uint8_t*)0x3FE) < 0xF0) && (eeprom_read_byte((uint8_t*)0x3FE)\
+== eeprom_read_byte((uint8_t*)0x3FF))) {OSCCAL = eeprom_read_byte((uint8_t*)0x3FE);}
+
+
+
 
