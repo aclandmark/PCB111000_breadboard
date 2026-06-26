@@ -88,10 +88,11 @@ else{if (Hex_address == 0);												//Start of hex file: address is zero
 			if ((Hex_address & PAmask) == page_address)					//Short jump: Jump within page
 				{section_break=0;page_break=0; orphan = 0;}}}
 
-if(prog_led_control & 0b00001000) {LED_2_on;}	
-else {LED_2_off;}}  
+//if(prog_led_control & 0b00001000) {LED_2_on;}	
+//else {LED_2_off;}}  
 
- 
+if(prog_led_control & 0b00001000) {sendChar('*');}	
+}  
 
 
 /***********************************************************************************************/
