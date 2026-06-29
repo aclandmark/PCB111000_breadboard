@@ -91,7 +91,7 @@ else{if (Hex_address == 0);												//Start of hex file: address is zero
 //if(prog_led_control & 0b00001000) {LED_2_on;}	
 //else {LED_2_off;}}  
 
-if(prog_led_control & 0b01000000) {sendChar('*');}	
+if(!(prog_led_control % 0b00001000)) {sendChar('*');}	
 }  
 
 
