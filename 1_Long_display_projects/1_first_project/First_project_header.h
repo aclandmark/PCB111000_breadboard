@@ -58,9 +58,9 @@ if((User_response == 'R') || (User_response == 'r'))break;} String_to_PC_Basic("
 
 /***********************************************************************************************/
 #define OSC_CAL \
-if ((eeprom_read_byte((uint8_t*)0x1FE) > 0x0F)\
-&&  (eeprom_read_byte((uint8_t*)0x1FE) < 0xF0) && (eeprom_read_byte((uint8_t*)0x1FE)\
-== eeprom_read_byte((uint8_t*)0x1FF))) {OSCCAL = eeprom_read_byte((uint8_t*)0x1FE);}
+if ((eeprom_read_byte((uint8_t*)0x3FE) > 0x0F)\
+&&  (eeprom_read_byte((uint8_t*)0x3FE) < 0xF0) && (eeprom_read_byte((uint8_t*)0x3FE)\
+== eeprom_read_byte((uint8_t*)0x3FF))) {OSCCAL = eeprom_read_byte((uint8_t*)0x3FE);}
 
 
 
