@@ -1,4 +1,4 @@
-#define F_CPU 8000000
+//#define F_CPU 8000000
 
 #include <avr/wdt.h>
 
@@ -66,9 +66,9 @@ if ((eeprom_read_byte((uint8_t*)0x1FE) > 0x0F)\
 
 
 /*****************************************************************************/
-#include "Resources/Subroutines/HW_timers.c"
-#include "Resources/PC_comms/Basic_Rx_Tx_Basic.c"
-#include "Resources/Subroutines/Random_and_prime_nos.c"
+#include "328_Resources/Subroutines/HW_timers.c"
+#include "328_Resources/PC_comms/Basic_Rx_Tx_Basic.c"
+#include "328_Resources/Subroutines/Random_and_prime_nos.c"
 
 
 
