@@ -64,6 +64,11 @@ if ((eeprom_read_byte((uint8_t*)0x3FE) > 0x0F)\
 
 
 
+/********************************************************/
+#define first_run_after_programming   !(eeprom_read_byte((uint8_t*)0x3FA))
+#define clear_programmer              eeprom_write_byte((uint8_t*)0x3FA, 0xFF);
+
+
 
 /*****************************************************************************/
 #include "328_Resources/Subroutines/HW_timers.c"
