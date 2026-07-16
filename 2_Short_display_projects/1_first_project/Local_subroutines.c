@@ -26,44 +26,25 @@ void display_binary (unsigned long Port_1, unsigned long Port_2, int duration)
 {for (int q = 0; q <= duration; q++){wdr();
 for(int m = 0; m <= 15; m++)
 {switch(m){
-case 0: if(Port_1 & (1 << m)){digit_4_RH_on; b_on;}
-        if(Port_2 & (1 << m)){digit_4_RH_on; c_on;}break;
-case 1: if(Port_1 & (1 << m)){digit_4_RH_on; f_on;}
-        if(Port_2 & (1 << m)){digit_4_RH_on; e_on;}break;
 
-case 2: if(Port_1 & (1 << m)){digit_3_RH_on; b_on;}
-        if(Port_2 & (1 << m)){digit_3_RH_on; c_on;}break;
-case 3: if(Port_1 & (1 << m)){digit_3_RH_on; f_on;}
-        if(Port_2 & (1 << m)){digit_3_RH_on; e_on;}break;
-
-case 4: if(Port_1 & (1 << m)){digit_2_RH_on; b_on;}
-        if(Port_2 & (1 << m)){digit_2_RH_on; c_on;}break;
-case 5: if(Port_1 & (1 << m)){digit_2_RH_on; f_on;}
-        if(Port_2 & (1 << m)){digit_2_RH_on; e_on;}break;
-
-case 6: if(Port_1 & (1 << m)){digit_1_RH_on; b_on;}
-        if(Port_2 & (1 << m)){digit_1_RH_on; c_on;}break;
-case 7: if(Port_1 & (1 << m)){digit_1_RH_on; f_on;}
-        if(Port_2 & (1 << m)){digit_1_RH_on; e_on;}break;
-
-case 8: if(Port_1 & (1 << m)){digit_4_LH_on; b_on;}
+case 0: if(Port_1 & (1 << m)){digit_4_LH_on; b_on;}
         if(Port_2 & (1 << m)){digit_4_LH_on; c_on;}break;
-case 9: if(Port_1 & (1 << m)){digit_4_LH_on; f_on;}
+case 1: if(Port_1 & (1 << m)){digit_4_LH_on; f_on;}
         if(Port_2 & (1 << m)){digit_4_LH_on; e_on;}break;
 
-case 10: if(Port_1 & (1 << m)){digit_3_LH_on; b_on;}
+case 2: if(Port_1 & (1 << m)){digit_3_LH_on; b_on;}
         if(Port_2 & (1 << m)){digit_3_LH_on; c_on;}break;
-case 11: if(Port_1 & (1 << m)){digit_3_LH_on; f_on;}
+case 3: if(Port_1 & (1 << m)){digit_3_LH_on; f_on;}
         if(Port_2 & (1 << m)){digit_3_LH_on; e_on;}break;
 
-case 12: if(Port_1 & (1 << m)){digit_2_LH_on; b_on;}
+case 4: if(Port_1 & (1 << m)){digit_2_LH_on; b_on;}
         if(Port_2 & (1 << m)){digit_2_LH_on; c_on;}break;
-case 13: if(Port_1 & (1 << m)){digit_2_LH_on; f_on;}
+case 5: if(Port_1 & (1 << m)){digit_2_LH_on; f_on;}
         if(Port_2 & (1 << m)){digit_2_LH_on; e_on;}break;
 
-case 14: if(Port_1 & (1 << m)){digit_1_LH_on; b_on;}
+case 6: if(Port_1 & (1 << m)){digit_1_LH_on; b_on;}
         if(Port_2 & (1 << m)){digit_1_LH_on; c_on;}break;
-case 15: if(Port_1 & (1 << m)){digit_1_LH_on; f_on;}
+case 7: if(Port_1 & (1 << m)){digit_1_LH_on; f_on;}
         if(Port_2 & (1 << m)){digit_1_LH_on; e_on;}break;
 }_delay_us(750);
 Clear_segments;
@@ -81,14 +62,10 @@ Clear_segments;
 Clear_digits;
   
 switch (p){
-case 0: digit_4_RH_on; break;
-case 1: digit_3_RH_on; break;
-case 2: digit_2_RH_on; break;
-case 3: digit_1_RH_on; break;
-case 4: digit_4_LH_on; break;
-case 5: digit_3_LH_on; break;
-case 6: digit_2_LH_on; break;
-case 7: digit_1_LH_on; break;}
+case 0: digit_4_LH_on; break;
+case 1: digit_3_LH_on; break;
+case 2: digit_2_LH_on; break;
+case 3: digit_1_LH_on; break;}
 
 for(int m = 0; m <=7; m++){
   if (seg_store[p] & (1 << m)){switch(m){
@@ -110,10 +87,10 @@ unsigned long random_display (char direction, char seg_counter, unsigned long PR
 {char letter;
 char prompt;
 
-  while (seg_counter < 56) {
+  while (seg_counter < 28) {
       letter = (PRN % 7) + 'a';
       PRN = PRN_16bit_GEN (PRN, &PRN_counter);
-      digit_num = (PRN % 8);
+      digit_num = (PRN % 4);
       if ((!(direction)) && (display_bkp[letter - 'a'] & (1 << digit_num))) {
         PRN_counter -= 1;
         continue; }
