@@ -116,8 +116,8 @@ PORTB |= (1 << PB1);
 
 
 /***************************************************************/
-#define first_run_after_programming   !(eeprom_read_byte((uint8_t*)0x1FA))
-#define clear_programmer              eeprom_write_byte((uint8_t*)0x1FA, 0xFF);
+#define first_run_after_programming   !(eeprom_read_byte((uint8_t*)0x3FA))
+#define clear_programmer              eeprom_write_byte((uint8_t*)0x3FA, 0xFF);
 
 
 
