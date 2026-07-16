@@ -17,6 +17,7 @@ Set_display_drivers;\
 Clear_segments;\
 Clear_digits;\
 set_up_switched_inputs;\
+set_up_unused_IO;\
 setup_PC_comms_Basic(0,16);\
 Timer_T0_10mS_delay_x_m(5);
 
@@ -33,9 +34,9 @@ WDTCSR = 0;
 #define SW_reset {wdt_enable(WDTO_30MS);while(1);}
 
 #define Set_display_drivers \
-DDRB = (1 << DDB0) | (1 << DDB1) | (1 << DDB2) | (1 << DDB3) | (1 << DDB4) | (1 << DDB5);\
+DDRB = (1 << DDB0) |  (1 << DDB2) | (1 << DDB3) | (1 << DDB4) | (1 << DDB5);\
 DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC3);\
-DDRD = (1 << DDD2) |(1 << DDD3) |(1 << DDD4) | (1 << DDD5) | (1 << DDD6) | (1 << DDD7);
+DDRD = (1 << DDD2) | (1 << DDD6) | (1 << DDD7);
 
 
 
@@ -45,7 +46,11 @@ MCUCR &= (~(1 << PUD));\
 DDRC &= (~((1 << PC5) | (1 << PC4)));\
 PORTC |= ((1 << PC5) | (1 << PC4));
 
-
+#define set_up_unused_IO \
+DDRD &= (~((1 << PD3) | (1 << PD4) | (1 << PD5)));\
+PORTD |= ((1 << PD3) | (1 << PD4) | (1 << PD5));
+DDRB &= (~(1 << PB1));
+PORTB |= (1 << PB1);
 
 /***********************************************************************************************/
 #define User_prompt_Basic \
