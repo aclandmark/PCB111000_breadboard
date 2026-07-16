@@ -128,12 +128,17 @@ do{String_to_PC_Basic("R?    ");}  while((isCharavailable_Basic (50) == 0));\
 User_response = Char_from_PC_Basic();\
 if((User_response == 'R') || (User_response == 'r'))break;} String_to_PC_Basic("\r\n");
 
+/***********************************************************************************************/
+#define OSC_CAL \
+if ((eeprom_read_byte((uint8_t*)0x3FE) > 0x0F)\
+&&  (eeprom_read_byte((uint8_t*)0x3FE) < 0xF0) && (eeprom_read_byte((uint8_t*)0x3FE)\
+== eeprom_read_byte((uint8_t*)0x3FF))) {OSCCAL = eeprom_read_byte((uint8_t*)0x3FE);}
 
 
 /*****************************************************************************/
-#include "Resources/Subroutines/HW_timers.c"
-#include "Resources/PC_comms/Basic_Rx_Tx_Basic.c"
-#include "Resources/Subroutines/Random_and_prime_nos.c"
+#include "328_Resources/Subroutines/HW_timers.c"
+#include "328_Resources/PC_comms/Basic_Rx_Tx_Basic.c"
+#include "328_Resources/Subroutines/Random_and_prime_nos.c"
 
 
 
