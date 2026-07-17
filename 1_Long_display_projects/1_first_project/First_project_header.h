@@ -33,10 +33,6 @@ WDTCSR = 0;
 
 #define SW_reset {wdt_enable(WDTO_30MS);while(1);}
 
-#define Check_for_POR \
-if(MCUSR & (1 << PORF)){power_on_reset = 1;
-MCUSR &= ~(1<<PORF);}
-
 
 
 #define Set_display_drivers \
