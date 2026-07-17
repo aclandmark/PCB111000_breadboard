@@ -38,11 +38,13 @@ WDTCSR = 0;
 if(MCUSR & (1 << PORF)){power_on_reset = 1;\
 MCUSR &= ~(1<<PORF);}*/
 
+
+
 /***************************************************************/
 #define Set_display_drivers \
-DDRB = (1 << DDB0) |  (1 << DDB2) | (1 << DDB3) | (1 << DDB4) | (1 << DDB5);\
+DDRB = (1 << DDB0) | (1 << DDB1) | (1 << DDB2) | (1 << DDB3) | (1 << DDB4) | (1 << DDB5);\
 DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC3);\
-DDRD = (1 << DDD2) | (1 << DDD6) | (1 << DDD7);
+DDRD = (1 << DDD2) |(1 << DDD3) |(1 << DDD4) | (1 << DDD5) | (1 << DDD6) | (1 << DDD7);
 
 
 
@@ -74,6 +76,19 @@ DDRD = (1 << DDD2) | (1 << DDD6) | (1 << DDD7);
 
 
 /********************************************************/
+#define digit_4_RH_on  PORTB |= (1 << PB1);
+#define digit_4_RH_off  PORTB &= (~(1 << PB1));
+
+#define digit_3_RH_on  PORTD |= (1 << PD4);
+#define digit_3_RH_off  PORTD &= (~(1 << PD4));
+
+#define digit_2_RH_on  PORTD |= (1 << PD5);
+#define digit_2_RH_off  PORTD &= (~(1 << PD5));
+
+#define digit_1_RH_on  PORTD |= (1 << PD3);
+#define digit_1_RH_off  PORTD &= (~(1 << PD3)); 
+
+
 #define digit_4_LH_on  PORTC |= (1 << PC1);
 #define digit_4_LH_off  PORTC &= (~(1 << PC1));
 
@@ -90,7 +105,9 @@ DDRD = (1 << DDD2) | (1 << DDD6) | (1 << DDD7);
 
 /********************************************************/
 #define Clear_segments    a_off;b_off;c_off;d_off;e_off;f_off;g_off;dp_off;
+
 #define Clear_digits \
+digit_1_RH_off;digit_2_RH_off;digit_3_RH_off;digit_4_RH_off;\
 digit_1_LH_off;digit_2_LH_off;digit_3_LH_off;digit_4_LH_off;
 
 
