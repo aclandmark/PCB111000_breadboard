@@ -4,7 +4,7 @@
 
 char User_response;
 char watch_dog_reset;
-char power_on_reset;
+//char power_on_reset;
 unsigned int PRN;
 unsigned char PRN_counter;
 
