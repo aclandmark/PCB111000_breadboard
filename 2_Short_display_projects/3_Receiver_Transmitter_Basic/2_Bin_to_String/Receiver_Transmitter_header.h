@@ -3,6 +3,7 @@
 #include <avr/wdt.h>
 
 char watch_dog_reset;
+//char power_on_reset;
 char User_response;
 
 #define T0_delay_10ms   5,178
@@ -10,10 +11,12 @@ char User_response;
 #define setup_HW \
 setup_watchdog;\
 ADMUX |= (1 << REFS0);\
-Clear_digits;\
-Clear_segments;\
+OSC_CAL;\
 Set_display_drivers;\
+Clear_segments;\
+Clear_digits;\
 set_up_switched_inputs;\
+set_up_unused_IO;\
 setup_PC_comms_Basic(0,16);\
 Timer_T0_10mS_delay_x_m(10);
 
@@ -31,7 +34,11 @@ WDTCSR = 0;
 
 #define SW_reset {wdt_enable(WDTO_30MS);while(1);}
 
+/*#define Check_for_POR \
+if(MCUSR & (1 << PORF)){power_on_reset = 1;\
+MCUSR &= ~(1<<PORF);}*/
 
+/***************************************************************/
 #define Set_display_drivers \
 DDRB = (1 << DDB0) |  (1 << DDB2) | (1 << DDB3) | (1 << DDB4) | (1 << DDB5);\
 DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC3);\
@@ -97,13 +104,24 @@ PORTC |= (1 << PC5);
 
 
 /***************************************************************/
+#define set_up_unused_IO \
+DDRD &= (~((1 << PD3) | (1 << PD4) | (1 << PD5)));\
+PORTD |= ((1 << PD3) | (1 << PD4) | (1 << PD5));\
+DDRB &= (~(1 << PB1));\
+PORTB |= (1 << PB1);
+
+
+
+/***************************************************************/
 #define switch_3_down ((PINC & 0x20)^0x20)
 #define switch_3_up   (PINC & 0x20)
 
 
+
 /***************************************************************/
-#define first_run_after_programming   !(eeprom_read_byte((uint8_t*)0x1FA))
-#define clear_programmer              eeprom_write_byte((uint8_t*)0x1FA, 0xFF);
+#define first_run_after_programming   !(eeprom_read_byte((uint8_t*)0x3FA))
+#define clear_programmer              eeprom_write_byte((uint8_t*)0x3FA, 0xFF);
+
 
 
 /***************************************************************/
@@ -113,12 +131,17 @@ do{String_to_PC_Basic("R?    ");}  while((isCharavailable_Basic (50) == 0));\
 User_response = Char_from_PC_Basic();\
 if((User_response == 'R') || (User_response == 'r'))break;} String_to_PC_Basic("\r\n");
 
+/***********************************************************************************************/
+#define OSC_CAL \
+if ((eeprom_read_byte((uint8_t*)0x3FE) > 0x0F)\
+&&  (eeprom_read_byte((uint8_t*)0x3FE) < 0xF0) && (eeprom_read_byte((uint8_t*)0x3FE)\
+== eeprom_read_byte((uint8_t*)0x3FF))) {OSCCAL = eeprom_read_byte((uint8_t*)0x3FE);}
 
 
 /*****************************************************************************/
-#include "Resources/Subroutines/HW_timers.c"
-#include "Resources/PC_comms/Basic_Rx_Tx_Basic.c"
-#include "Resources/Subroutines/Random_and_prime_nos.c"
+#include "328_Resources/Subroutines/HW_timers.c"
+#include "328_Resources/PC_comms/Basic_Rx_Tx_Basic.c"
+#include "328_Resources/Subroutines/Random_and_prime_nos.c"
 
 
 
