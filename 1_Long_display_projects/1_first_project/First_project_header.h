@@ -4,6 +4,7 @@
 
 char User_response;
 char watch_dog_reset;
+char power_on_reset;
 unsigned int PRN;
 unsigned char PRN_counter;
 
@@ -31,6 +32,12 @@ WDTCSR = 0;
 #define wdr()  __asm__ __volatile__("wdr")
 
 #define SW_reset {wdt_enable(WDTO_30MS);while(1);}
+
+#define Check_for_POR \
+if(MCUSR & (1 << PORF)){power_on_reset = 1;
+MCUSR &= ~(1<<PORF);}
+
+
 
 #define Set_display_drivers \
 DDRB = (1 << DDB0) | (1 << DDB1) | (1 << DDB2) | (1 << DDB3) | (1 << DDB4) | (1 << DDB5);\
