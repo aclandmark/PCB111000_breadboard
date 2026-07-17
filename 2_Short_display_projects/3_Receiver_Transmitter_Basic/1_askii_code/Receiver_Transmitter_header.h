@@ -3,6 +3,7 @@
 #include <avr/wdt.h>
 
 char watch_dog_reset;
+//char power_on_reset;
 char User_response;
 
 #define T0_delay_10ms   5,178
@@ -33,7 +34,9 @@ WDTCSR = 0;
 
 #define SW_reset {wdt_enable(WDTO_30MS);while(1);}
 
-
+/*#define Check_for_POR \
+if(MCUSR & (1 << PORF)){power_on_reset = 1;\
+MCUSR &= ~(1<<PORF);}*/
 
 /***************************************************************/
 #define Set_display_drivers \
