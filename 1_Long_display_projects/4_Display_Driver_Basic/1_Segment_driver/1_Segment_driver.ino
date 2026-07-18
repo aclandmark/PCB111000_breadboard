@@ -19,8 +19,6 @@ int main (void){
 char letter = 0, digit_num;            
 char seg_counter = 0;
 setup_HW;
-//_delay_ms(1);
-
 
 if(first_run_after_programming)
 {clear_programmer;
@@ -28,7 +26,7 @@ String_to_PC_Basic(message_1);}
 else String_to_PC_Basic(message_2);
 
 digit_num=1;
-while(digit_num <= 4){
+while(digit_num <= 8){
 
 do{
 letter = waitforkeypress_Basic();
@@ -38,10 +36,14 @@ letter = waitforkeypress_Basic();
   Clear_segments;
   
 switch (digit_num){
-  case 4: digit_4_LH_on; break;
-  case 3: digit_3_LH_on; break;
-  case 2: digit_2_LH_on; break;
-  case 1: digit_1_LH_on; break;}}
+ case 1: digit_1_LH_on; break; 
+ case 2: digit_2_LH_on; break;
+ case 3: digit_3_LH_on; break;
+ case 4: digit_4_LH_on; break; 
+ case 5: digit_1_RH_on; break; 
+ case 6: digit_2_RH_on; break; 
+ case 7: digit_3_RH_on; break; 
+ case 8: digit_4_RH_on; break;}}
   seg_counter += 1;
   
   switch(letter)
