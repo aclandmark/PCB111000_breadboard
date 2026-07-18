@@ -3,7 +3,8 @@
 //so that numbers can simply be entered at the keyboard
 //For use with breadboard loaded with single digit
 
-#include "header.h"
+#include "One_Digit_display_header.h"
+#include "display_header.h"
 #include "Local_subroutines.c"
 
 
@@ -35,14 +36,8 @@ const char* string_ptr = 0;     //pointer: will be loaded with the address of a 
 
 setup_HW;               
 
-
-if(MCUSR & (1 << PORF))
-{User_prompt_Basic;
-eeprom_write_byte((uint8_t*)0x1FA, 0);
-MCUSR = 0;Clear_digits;}
-
-if(!(eeprom_read_byte((uint8_t*)0x1FA)))
-{eeprom_write_byte((uint8_t*)0x1FA, 0xFF);
+if(first_run_after_programming){
+clear_programmer;
 print_memory_contents;
 String_to_PC_Basic("\r\nSend digits?");}
 
