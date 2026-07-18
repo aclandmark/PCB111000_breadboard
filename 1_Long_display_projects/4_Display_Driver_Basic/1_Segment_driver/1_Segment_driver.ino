@@ -5,6 +5,7 @@
  the display and an actual number.
  */
 
+#include "display_header.h"
 #include "Segment_driver_header.h"
 
 
