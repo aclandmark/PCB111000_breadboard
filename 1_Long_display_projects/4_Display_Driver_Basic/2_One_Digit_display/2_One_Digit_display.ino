@@ -27,30 +27,20 @@ const char *message_1 = "String memory dump\t";
 
 int main (void){
 
-char   digit='0';
-int digit_num=0;                 //defines number of next digit on display           
+char   digit='0';  
 int string_counter=0;
 int letter_counter=0;
 const char* string_ptr = 0;     //pointer: will be loaded with the address of a segment string 
-                //(i.e. the address of string "zero", "one", "two" etc....) 
+                                 //(i.e. the address of string "zero", "one", "two" etc....) 
 
 setup_HW;               
 
-if(first_run_after_programming){
-clear_programmer;
 print_memory_contents;
-String_to_PC_Basic("\r\nSend digits?");}
+String_to_PC_Basic("\r\nSend digits?");//}
 
-else 
-String_to_PC_Basic("\r\nAgain");
 Clear_digits;
-
-digit_num = 0;                                  //First digit on display
-
 Clear_segments;
-Clear_digits;
 digit_1_LH_on;
-
 
 do{                                             //start of "do{}while();" loop
 while(!(isCharavailable_Basic(1)))wdr(); 
@@ -75,22 +65,13 @@ default: continue; break;}                        //Illegal key press: Go immedi
 
                                                   //Send the address of the required string to 
                                                   //subroutine "display_num_string();"
-display_single_digit_basic(string_ptr, digit_num);
-digit_num++;
-} while (digit_num < 8);
-                                                  //return to the top of the "do" loop until all digits 
-                                                  //have been illuminated
-
-while(!(isCharavailable_Basic(1)))wdr(); 
-Char_from_PC_Basic();
-Clear_digits;                                          //clear display and repeat
-SW_reset;}
+display_single_digit_basic(string_ptr);
+} while (1);}
 
 
 
 /************************************************************************************************************************/
-
-void display_single_digit_basic (const char* s, int digit_num){             //Subroutine requires a pointer to the string   
+void display_single_digit_basic (const char* s){             //Subroutine requires a pointer to the string   
 int char_ptr=0;                                                     //containing segments used to define a digit
 char letter;
 
