@@ -4,7 +4,7 @@
 #include "display_header.h"
 
 
-//#define min_intensity 1
+#define min_intensity 1
 
 
 #ifdef min_intensity 
@@ -15,7 +15,7 @@ int led_off_time = 50;
 int led_on_time = 1150;
 #endif
 
-
+#define test_delay _delay_ms(50);
 
 int main (void){
           
@@ -74,6 +74,7 @@ case '8': string_ptr = eight; break;
 case '9': string_ptr = nine; break;
 case 0: break;} 
 if(!(digit))break;                       
+test_delay;
 _delay_us(led_off_time);
 display_single_digit(string_ptr, digit_num, dp);
 digit_num++;
