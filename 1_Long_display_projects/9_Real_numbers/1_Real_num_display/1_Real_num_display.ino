@@ -1,3 +1,7 @@
+
+//See https://www.h-schmidt.net/FloatConverter/IEEE754.html for FPN converter
+
+
 #include <stdio.h>
 
 #include "Real_num_header.h"
@@ -51,7 +55,7 @@ Display_string_to_askii(real_num_string);
 
 String_to_PC_Basic("\r\n");
 String_to_PC_Basic(real_num_string);
-String_to_PC_Basic(" divided by 2.675 equals ");
+String_to_PC_Basic(" divided by 0.1 equals ");
 
 Fnum = atof(real_num_string);
 Fnum = Fnum/0.1;           //2.675;
@@ -59,8 +63,8 @@ Fnum = Fnum/0.1;           //2.675;
 Fnum_to_string(Fnum, num_string);
 Num_string_to_PC_Basic(num_string);
 
-//Binary_to_PC((*(long*)&Fnum), 0);String_to_PC_Basic("\r\n");
-//Binary_to_PC((*(long*)&Fnum), 1);
+Binary_to_PC((*(long*)&Fnum), 0);
+Binary_to_PC((*(long*)&Fnum), 1);
 askii_to_display_string(num_string);
 display_real_num(num_string);
 SW_reset;}
