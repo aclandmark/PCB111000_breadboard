@@ -71,7 +71,7 @@ long res, remainder;
 int no_decimal_places = 7;
 int str_ptr;
 
-digits = unpack_FPN(Fnum, &twos_expnt);
+digits = unpack_FPN(Fnum, &twos_expnt) + 1;   //Plus 1 for rounding  
 
 twos_expnt = 23 - twos_expnt;
 for(int m = 0; m < twos_expnt; m++)
@@ -106,7 +106,7 @@ FPN_digits = (*(long*)&FPN);                                      //Read the FPN
 *twos_expnt = (FPN_digits >> 23) - 127;                           //Exponent occupies bits 0 to 7
 FPN_digits = (FPN_digits & 0x7FFFFF);                             //Isolate bits zero to 22
 FPN_digits |= ((unsigned long)0x80000000 >> 8);                   //Add the unsaved 1 to bit 23
-return FPN_digits;}
+return FPN_digits;}     
 
 
 
@@ -122,7 +122,10 @@ return FPN_digits;}
 /********************************************************/
 void Binary_to_PC(long num, char mode){
 
+num += 1;
+
 if(!(mode)){
+  String_to_PC_Basic("\r\nFPN: With numerator bits zero to 22\t");
 for(int m = 0; m <= 31; m++){  
   if(num & ((unsigned long)0x80000000 >> m)) 
 Char_to_PC_Basic('1'); else Char_to_PC_Basic('0');
@@ -133,7 +136,7 @@ switch (m)
   }}return;}
 
   else
-  
+  String_to_PC_Basic("\r\nFPN: with full 24 bit numerator\t\t");
   for(int m = 0; m <= 31; m++){  
   if(num & ((unsigned long)0x80000000 >> m)) 
 Char_to_PC_Basic('1'); else Char_to_PC_Basic('0');
