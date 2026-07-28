@@ -3,6 +3,8 @@
      
 
 #include "Interrupt_basic_header.h"
+#include "display_header.c"
+
 
 volatile unsigned int clock_rate = 500;                               //Extra for examples 2 and 3
 volatile char dig_num = 0;
@@ -59,7 +61,7 @@ case 6:  digit_2_LH_on; break;
 case 7:  digit_1_LH_on; break;}
 
   seg_num += 1;
-  if ( !(seg_num%2))dig_num += 1;   //(seg_num) &&
+  if ( !(seg_num%2))dig_num += 1;   
   dig_num = dig_num%8;
   sei();
   Timer_T0_10mS_delay_x_m(20);
