@@ -3,7 +3,7 @@
      
 
 #include "Interrupt_basic_header.h"
-#include "display_header.c"
+#include "display_header.h"
 
 
 volatile unsigned int clock_rate = 500;                               //Extra for examples 2 and 3
