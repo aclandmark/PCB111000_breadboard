@@ -50,13 +50,8 @@ DDRB = (1 << DDB0) | (1 << DDB1) | (1 << DDB2) | (1 << DDB3) | (1 << DDB4) | (1 
 DDRC = (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC3);\
 DDRD = (1 << DDD2) |(1 << DDD3) |(1 << DDD4) | (1 << DDD5) | (1 << DDD6) | (1 << DDD7);
 
-/*
-#define Clear_segments    a_off;b_off;c_off;d_off;e_off;f_off;g_off;dp_off;
 
-#define Clear_digits \
-digit_1_RH_off;digit_2_RH_off;digit_3_RH_off;digit_4_RH_off;\
-digit_1_LH_off;digit_2_LH_off;digit_3_LH_off;digit_4_LH_off;
-*/
+
 /***************************************************************/
 #define set_up_switched_inputs \
 MCUCR &= (~(1 << PUD));\
