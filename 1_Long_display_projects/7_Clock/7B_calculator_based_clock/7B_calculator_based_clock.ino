@@ -65,6 +65,8 @@ UCSR0B &= (~(1 << RXEN0));
 sei();
 initialise_T2_Local();
 start_clock_Local();
+//Xtal_clock();
+
 display_time(digits);}
 
 
@@ -125,6 +127,42 @@ else
 
 
 /**********************************************************************************/
+/*void initialise_T2_Local(void){
+ASSR = (1 << AS2); 
+TCNT2 = 0;
+TCCR2A = 0;
+TCCR2B |= (1 << CS20) | (1 << CS21);
+OCR2B = 0;}*/
+
+/*void Xtal_clock(void){
+tick_counter = 0;
+clock_tick = 0;
+TCNT2 = 0;
+OCR2A = 102;
+OCR2B = 0;
+TCCR2A = 0; 
+TIMSK2 |= (1 << OCIE2A);
+ASSR = (1 << AS2);
+TCCR2B = (1 << CS20) | (1 << CS21);
+while (ASSR & (1 << TCR2BUB)); 
+}*/
+
+/**********************************************************************************/
+
+
+
+/**********************************************************************************/
+/*ISR (TIMER2_COMPA_vect){ char string[5];
+  OCR2A += 102;
+  clock_tick += 1;
+  tick_counter += 1;
+  if(tick_counter == 9){tick_counter = -1; while (ASSR & (1 << TCR2AUB));
+  OCR2A += 4;}
+   if(clock_tick == 2){clock_tick = 0;deci_sec_counter += 2;
+if(deci_sec_counter == 864000)deci_sec_counter = 0;
+Format_time_for_display();}}*/
+
+
 void initialise_T2_Local(void){
 ASSR = (1 << AS2); 
 TCNT2 = 0;
@@ -153,6 +191,7 @@ ISR (TIMER2_COMPA_vect){ char string[5];
    if(clock_tick == 2){clock_tick = 0;deci_sec_counter += 2;
 if(deci_sec_counter == 864000)deci_sec_counter = 0;
 Format_time_for_display();}}
+
 
 
 
