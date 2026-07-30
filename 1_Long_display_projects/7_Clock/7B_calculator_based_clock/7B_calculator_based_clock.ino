@@ -30,14 +30,14 @@
 
 
 
-int EEP_Location = 0x1F9;
+int EEP_Location = 0x3F9;
 int main (void){
 char User_response;
 
 setup_HW;
 
-if((power_on_reset) && ((eeprom_read_byte((uint8_t*)0x1F9)) != 0xFF)){
-EEP_Location = 0x1F9;
+if((power_on_reset) && ((eeprom_read_byte((uint8_t*)0x3F9)) != 0xFF)){
+EEP_Location = 0x3F9;
 digits[7] = eeprom_read_byte((uint8_t*)EEP_Location--);
 
 for (int m = 0; m<=4; m++){
