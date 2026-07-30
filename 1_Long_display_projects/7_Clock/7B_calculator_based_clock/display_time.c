@@ -10,7 +10,7 @@ void Timer_T0_sub(char, unsigned char);
 #define T0_delay_900uS      3, 144
 #define T0_delay_300uS      3,218
 
-#define min_intensity 1
+//#define min_intensity 1
 
 extern int led_off_time;
 extern int led_on_time;
