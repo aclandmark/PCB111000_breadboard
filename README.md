@@ -4,7 +4,7 @@ PCB111000 can be construced on plug in breadboard.
 A single IC is used to drive the display and also host user programs.
 Code complexity is therefore greater but construction simpler.
 
-Code is loaded using a copy of the PCB111000 bootloader.
+User code is loaded using a copy of the PCB111000 bootloader.
 Connection to a PC is enabled by using a CP2102 USB bridge.
 
 Three versions are presented.  
