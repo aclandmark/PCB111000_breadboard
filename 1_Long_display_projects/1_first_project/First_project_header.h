@@ -24,7 +24,7 @@ Set_display_drivers;\
 Clear_segments;\
 Clear_digits;\
 set_up_switched_inputs;\
-setup_PC_comms_Basic(0,16);\
+setup_PC_comms_B(0,16);\
 Timer_T0_10mS_delay_x_m(5);
 
 //Check_for_r_prompt();\
