@@ -61,13 +61,15 @@ WDTCSR = 0;
 				User_response = receiveChar();
 				switch(User_response){
 					case 'p': break;
-					case 'r': eeprom_write_byte((uint8_t*)0x1EF,0b11111011);
+					case 'r': eeprom_write_byte((uint8_t*)0x3EF,0b11111011);
 					asm("jmp 0x0000");break;
 				default: sendString("?\r\n");continue; break;}
 			if(User_response =='p')break;}
 			
 			sendString("\r\nSend_Atmega 328 Hex file\r\n");
 
+eeprom_write_byte((uint8_t*)0x3EF,0b11111101);
+MCUSR = 0;
 
 			MCUCR = (1<<IVCE);  								//Select the interrupt vector table starting at start of boot section
 			MCUCR = (1<<IVSEL);
