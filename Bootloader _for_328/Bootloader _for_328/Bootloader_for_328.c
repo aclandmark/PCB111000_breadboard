@@ -35,14 +35,7 @@ WDTCSR = 0;
 
 
 
-
-
-
-	
-
-
-
-		int main (void){									//Loaded at address 0x3580, just ahead of the boot loader section
+		int main (void){									//Loaded at address 0x7000, the start of the boot loader section
 
 			if(!(MCUSR & 2)) 								//For EXTRF skip the jmp 0x0000 command
 			{asm("jmp 0x0000");}							//Jump to application code for POR and WDTout
