@@ -47,7 +47,7 @@ WDTCSR = 0;
 
 /***********************************************************************************************/
 void Check_for_r_prompt(void){
-  if (!(eeprom_read_byte((uint8_t*)0x1EF) & 0x04))
+  if (!(eeprom_read_byte((uint8_t*)0x3EF) & 0x04))
   r_prompt = 1;
   else r_prompt = 0;}
 
@@ -65,14 +65,14 @@ r_prompt = 1;}
 
 
 /***********************************************************************************************/
-#define just_programmed     !(eeprom_read_byte((uint8_t*)0x1EF) & 0x02)
-#define repeat_program      eeprom_write_byte((uint8_t*)0x1EF, ~0x02)
+#define just_programmed     !(eeprom_read_byte((uint8_t*)0x3EF) & 0x02)
+#define repeat_program      eeprom_write_byte((uint8_t*)0x3EF, ~0x02)
 
 
 
 /***********************************************************************************************/
 #define clear_resets \
-eeprom_write_byte((uint8_t*)0x1EF, 0xFF);\
+eeprom_write_byte((uint8_t*)0x3EF, 0xFF);\
 watch_dog_reset = 0;
 
 
@@ -135,12 +135,6 @@ if((User_response == 'R') || (User_response == 'r'))break;} String_to_PC_B("\r\n
 if ((eeprom_read_byte((uint8_t*)0x3FE) > 0x0F)\
 &&  (eeprom_read_byte((uint8_t*)0x3FE) < 0xF0) && (eeprom_read_byte((uint8_t*)0x3FE)\
 == eeprom_read_byte((uint8_t*)0x3FF))) {OSCCAL = eeprom_read_byte((uint8_t*)0x3FE);}
-
-
-
-/********************************************************/
-#define just_programmed     !(eeprom_read_byte((uint8_t*)0x1EF) & 0x02)
-#define repeat_program      eeprom_write_byte((uint8_t*)0x1EF, ~0x02)
 
 
 
