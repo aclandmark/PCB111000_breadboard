@@ -18,6 +18,7 @@ int led_on_time = 1150;
 
 
 
+
 int main (void){
 
 char real_num_string[15];
@@ -29,27 +30,23 @@ char digits_post_dp;
 
 setup_HW;               
 
-if(power_on_reset){
- User_prompt_Basic;
- record_POR; 
- Clear_segments;}
 
- if(first_run){
-  clear_programmer;
-  String_to_PC_Basic("\r\nEnter integer?");
-String_to_PC_Basic ("\r\nAK to display root\r\n");}
+if ((just_programmed) || (r_prompt))
+{clear_resets;
+String_to_PC_B("\r\nEnter real number?");
+String_to_PC_B ("\r\nAK to display root\r\n");}
 
 else 
 
-String_to_PC_Basic("\r\nAgain\t");
+String_to_PC_B("\r\nAgain\t");
 
-Real_num_from_PC_Basic(real_num_string);
+Real_num_from_PC_B(real_num_string);
 
 display_real_num(real_num_string);    //needs AK to exit
-exit_Key_press = Char_from_PC_Basic();
+exit_Key_press = Char_from_PC_B();
 
 invert_num_string(real_num_string);
-Real_num_string_to_PC_Basic(real_num_string);
+Real_num_string_to_PC_B(real_num_string);
 
 digits_post_dp = 0;
 digits_pre_dp = 0;
@@ -71,23 +68,23 @@ digits_post_dp /= 2;
 real_num_greater_than_1;
 real_num_less_than_1;}
 
-Char_to_PC_Basic ('\t');
-Real_num_string_to_PC_Basic(digits);
-digits[8] = 0;
+Char_to_PC_B ('\t');
+Real_num_string_to_PC_B(digits);
+digits[8] = 0;             
 invert_num_string(digits);
 display_real_num(digits);
 
-exit_Key_press = Char_from_PC_Basic();
+exit_Key_press = Char_from_PC_B();
 
 SW_reset;}
 
 
 
 /***************************************************************************************/
-void Real_num_string_to_PC_Basic(char * digits){
- for (int m = 0; m <= 8; m++){if(!(digits[m]))return;  if(!(digits[m] & 0x80))
- Char_to_PC_Basic(digits[m]);
- else {Char_to_PC_Basic(digits[m] & ~0x80);Char_to_PC_Basic('.');}}}
+void Real_num_string_to_PC_B(char * digits){
+ for (int m = 0; m <= 8; m++){if(!(digits[m]))return;  if(!(digits[m] & 0x80))  
+ Char_to_PC_B(digits[m]);
+ else {Char_to_PC_B(digits[m] & ~0x80);Char_to_PC_B('.');}}}
 
 
 
@@ -138,7 +135,7 @@ if(!(digit))break;
 display_single_digit(string_ptr, digit_num, dp);
 digit_num++;
 _delay_us(led_on_time);
-}  while (digit_num < 8); 
+}  while (digit_num < 8);   
 
 for (int m = digit_num; m < 8; m++)_delay_us(1200);
 
