@@ -7,6 +7,8 @@
 #define min_intensity 1
 
 
+
+
 #ifdef min_intensity 
 int led_off_time = 900;
 int led_on_time = 300;
@@ -17,7 +19,7 @@ int led_on_time = 1150;
 
 #define test_delay _delay_ms(1);
 
-int max_delay = 100;
+int max_delay = 20;
 
 
 int main (void){
@@ -25,13 +27,15 @@ int main (void){
 int string_counter=0;
 int letter_counter=0;
 long num;
-char num_string[] = "87654321";   //num_string[11];
+char num_string[] = "87654321";
 
 setup_HW;               
 
+Start_timer_T1_sub(T1_delay_200ms);
+
 while(1){
 Display_Int(num_string);
-for(int m = 0; m <= 7; m++)num_string[m] = (num_string[m]-'0' +1)%10 + '0';}
+for(int m = 0; m < 8; m++)num_string[m] = (num_string[m]-'0' +1)%10 + '0';}
 
 SW_reset;}
 
@@ -78,10 +82,12 @@ display_single_digit(string_ptr);
 
 _delay_us(led_on_time);}  
 
-if(switch_3_down){max_delay *= 2;max_delay /= 3;}
-if(switch_2_down){if (!(max_delay))max_delay = 2; else {max_delay *= 3;max_delay /= 2;}}
+if((TIFR1 & (1<<TOV1)) && (switch_1_down))
+{ TIFR1 |= (1<<TOV1); Start_timer_T1_sub(T1_delay_400ms);max_delay *= 4;max_delay /= 5;}
 
-if (UCSR0A & (1 << RXC0))break;}Char_from_PC_Basic();}
+if(switch_2_down){SW_reset;}
+
+if (UCSR0A & (1 << RXC0))break;}Char_from_PC_B();}
 
 
 
