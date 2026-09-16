@@ -3,6 +3,11 @@
 //so that numbers can simply be entered at the keyboard
 //For use with breadboard loaded with single digit
 
+
+//Send file num_string or send string from Br@y with delay set to 1
+
+
+
 #include "One_Digit_display_header.h"
 #include "display_header.h"
 #include "Local_subroutines.c"
@@ -23,29 +28,45 @@ const char *message_1 = "String memory dump\t";
   const char *message_2 = "\r\nDigit\tAddress    String\r\n";
 
 
-//Enter main routine here
+
 
 int main (void){
 
 char   digit='0';  
 int string_counter=0;
 int letter_counter=0;
+int dig_counter;
 const char* string_ptr = 0;     //pointer: will be loaded with the address of a segment string 
                                  //(i.e. the address of string "zero", "one", "two" etc....) 
 
 setup_HW;               
 
 print_memory_contents;
-String_to_PC_Basic("\r\nSend digits?");//}
 
+
+String_to_PC_B("\r\nSend digits?");
+
+
+dig_counter = 0;
+
+do{ 
+
+while(!(isCharavailable_B(1)))wdr(); 
+digit = Char_from_PC_B();                   //user enters digit (0 to 9) at the PC keyboard
 Clear_digits;
 Clear_segments;
-digit_1_LH_on;
 
-do{                                             //start of "do{}while();" loop
-while(!(isCharavailable_Basic(1)))wdr(); 
-Clear_segments;
-digit = Char_from_PC_Basic();                   //user enters digit (0 to 9) at the PC keyboard
+
+switch (dig_counter){
+  case 7: digit_1_LH_on; break;
+  case 6: digit_2_LH_on; break;
+  case 5: digit_3_LH_on; break;
+  case 4: digit_4_LH_on; break;
+  case 3: digit_1_RH_on; break;
+  case 2: digit_2_RH_on; break;
+  case 1: digit_3_RH_on; break;
+  case 0: digit_4_RH_on; break;}
+
 
 switch(digit){                                  //The appropriate address is loaded into location 
                                                 //"string_pointer"
@@ -65,13 +86,17 @@ default: continue; break;}                        //Illegal key press: Go immedi
 
                                                   //Send the address of the required string to 
                                                   //subroutine "display_num_string();"
-display_single_digit_basic(string_ptr);
+display_single_digit_B(string_ptr);
+
+dig_counter += 1;
+dig_counter %= 8;
+
 } while (1);}
 
 
 
 /************************************************************************************************************************/
-void display_single_digit_basic (const char* s){             //Subroutine requires a pointer to the string   
+void display_single_digit_B (const char* s){             //Subroutine requires a pointer to the string   
 int char_ptr=0;                                                     //containing segments used to define a digit
 char letter;
 
