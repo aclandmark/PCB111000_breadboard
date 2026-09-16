@@ -22,26 +22,21 @@ int main (void){
 int string_counter=0;
 int letter_counter=0;
 long num;
-char num_string[11];
+char num_string[9];
 
 
 setup_HW;               
 
-for(int n = 0; n<11; n++)num_string[n] = 0;
+for(int n = 0; n <= 8; n++)num_string[n] = 0;
 
-if(power_on_reset)
-{User_prompt_Basic;
-record_POR;
-Clear_segments;}   
-
-if(first_run)
-{eeprom_write_byte((uint8_t*)0x3FA, 0xFF);
-String_to_PC_Basic("\r\nSend integer? AK to repeat.");}
+if ((just_programmed) || (r_prompt))
+{clear_resets;
+String_to_PC_B("\r\nSend integer? AK to repeat.");}
 
 else 
 
-String_to_PC_Basic("\r\nAgain");
-num = Display_Int_from_PC_Basic(num_string);
+String_to_PC_B("\r\nAgain");
+num = Display_Int_from_PC_B(num_string);
 invert_num_string(num_string);
 ltoa(num/2, num_string, 10);
 invert_num_string(num_string);
@@ -124,20 +119,25 @@ char_ptr++;}                                                         //increment
 
 
 /**********************************************************************************************************************************************************************************/
-long Display_Int_from_PC_Basic(char digits[]){
+long Display_Int_from_PC_B(char digits[]){
 char keypress;
 
 do
-{keypress =  waitforkeypress_Basic();} 
-while (!(decimal_digit_Basic(keypress)));                                      //(non_decimal_char(keypress));  //Not -,0,1,2,3,4,5,6,7,8 or 9
+{keypress =  waitforkeypress_B();} 
+while (!(decimal_digit_B(keypress)));                                      //(non_decimal_char(keypress));  //Not -,0,1,2,3,4,5,6,7,8 or 9
 digits[0] = keypress;
 Display_Int(digits);
 while(1){
-if ((keypress = wait_for_return_key_Basic())  =='\r')break;
-if (decimal_digit_Basic (keypress))                                           //012345678or9  :Builds up the number one keypress at a time
+if ((keypress = wait_for_return_key_B())  =='\r')break;
+
+if (digits[7]) break;
+
+if (decimal_digit_B (keypress))                                           //012345678or9  :Builds up the number one keypress at a time
 {for(int n = 7; n>=1; n--)
 digits[n] = digits[n-1];                                                //Shifts display left for each keypress
-digits[0] = keypress;}Display_Int(digits);}
+digits[0] = keypress;}Display_Int(digits);
+
+}
 invert_num_string(digits);           
 return atol(digits);}
 
