@@ -45,9 +45,8 @@ char decimal_places;
  float fpn_result;
  char num_string[12];
 
-     
+   sei();  
 setup_HW;
-sei();
 
 if ((just_programmed) || (r_prompt))
 {clear_resets;
