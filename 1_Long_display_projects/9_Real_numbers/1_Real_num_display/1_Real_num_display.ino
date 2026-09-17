@@ -12,7 +12,6 @@
 
 //#define min_intensity 1
 
-
 #ifdef min_intensity 
 int led_off_time = 900;
 int led_on_time = 300;
@@ -34,34 +33,29 @@ char num_string[10];
 setup_HW;               
 
 
-if(power_on_reset){
- User_prompt_Basic;
- record_POR; 
- Clear_segments;}
+if ((just_programmed) || (r_prompt))
+{clear_resets;
+String_to_PC_B ("\r\nSend real number\r\n");}
 
- if(first_run){
-  clear_programmer;
-  String_to_PC_Basic ("\r\nSend real number\r\n");}
+else    
 
-else 
+String_to_PC_B("\r\nAgain");
 
-String_to_PC_Basic("\r\nAgain");
-
-Real_num_from_PC_Basic(real_num_string);
+Real_num_from_PC_B(real_num_string);
 display_real_num(real_num_string);
-waitforkeypress_Basic();
+waitforkeypress_B();
 invert_num_string(real_num_string);
 Display_string_to_askii(real_num_string);
 
-String_to_PC_Basic("\r\n");
-String_to_PC_Basic(real_num_string);
-String_to_PC_Basic(" divided by 0.1 equals ");
+String_to_PC_B("\r\n");
+String_to_PC_B(real_num_string);
+String_to_PC_B(" divided by 0.1 equals ");
 
 Fnum = atof(real_num_string);
 Fnum = Fnum/0.1;           //2.675;
 
 Fnum_to_string(Fnum, num_string);
-Num_string_to_PC_Basic(num_string);
+Num_string_to_PC_B(num_string);
 
 Binary_to_PC((*(long*)&Fnum), 0);
 Binary_to_PC((*(long*)&Fnum), 1);
