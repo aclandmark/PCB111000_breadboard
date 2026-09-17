@@ -19,13 +19,13 @@
 
 
 /*****************************************************************************/
-void Char_to_PC_Basic(char);
+void Char_to_PC_B(char);
 long unpack_FPN(float, int *);
 void Long_to_PC(long);
-void Int_to_PC_Basic (long);
-void String_to_PC_Basic(const char *);
+void Int_to_PC_B (long);
+void String_to_PC_B(const char *);
 long divide(long, long, long *, long *, int);
-char waitforkeypress_Basic(void);
+char waitforkeypress_B(void);
 void invert_num_string(char *);
 void display_real_num(char*);
 
@@ -77,10 +77,10 @@ twos_expnt = 23 - twos_expnt;
 for(int m = 0; m < twos_expnt; m++)
 {if (Divisor >= 0x40000000)digits /= 2; else Divisor *= 2;}
 
-Int_to_PC_Basic (digits);
-String_to_PC_Basic("divided by ");
-Int_to_PC_Basic(Divisor);
-String_to_PC_Basic(" equals ");
+Int_to_PC_B (digits);
+String_to_PC_B("divided by ");
+Int_to_PC_B(Divisor);
+String_to_PC_B(" equals ");
 
 divide(digits, Divisor, &res, &remainder, no_decimal_places);
  
@@ -125,26 +125,26 @@ void Binary_to_PC(long num, char mode){
 num += 1;
 
 if(!(mode)){
-  String_to_PC_Basic("\r\nFPN: With numerator bits zero to 22\t");
+  String_to_PC_B("\r\nFPN: With numerator bits zero to 22\t");
 for(int m = 0; m <= 31; m++){  
   if(num & ((unsigned long)0x80000000 >> m)) 
-Char_to_PC_Basic('1'); else Char_to_PC_Basic('0');
+Char_to_PC_B('1'); else Char_to_PC_B('0');
 
 switch (m)
   {case 0:   case 8:  case 12:  case 16:  case 20:
-  case 24:  case 28:  Char_to_PC_Basic(' ');break;
+  case 24:  case 28:  Char_to_PC_B(' ');break;
   }}return;}
 
   else
-  String_to_PC_Basic("\r\nFPN: with full 24 bit numerator\t\t");
+  String_to_PC_B("\r\nFPN: with full 24 bit numerator\t\t");
   for(int m = 0; m <= 31; m++){  
   if(num & ((unsigned long)0x80000000 >> m)) 
-Char_to_PC_Basic('1'); else Char_to_PC_Basic('0');
+Char_to_PC_B('1'); else Char_to_PC_B('0');
 
 switch (m)
   {case 0:     case 11:  case 15:  case 19:
-  case 23:  case 27:  Char_to_PC_Basic(' ');break;
-  case 8: Char_to_PC_Basic(' ');Char_to_PC_Basic('1');break;}}}
+  case 23:  case 27:  Char_to_PC_B(' ');break;
+  case 8: Char_to_PC_B(' ');Char_to_PC_B('1');break;}}}
 
 
 
