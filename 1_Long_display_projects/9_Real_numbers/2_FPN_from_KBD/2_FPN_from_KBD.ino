@@ -48,10 +48,16 @@ char decimal_places;
      
 setup_HW;
 sei();
-if(power_on_reset){User_prompt_A;record_POR;}
-if(first_run)
-{Serial.write("Enter real number (i.e. with decimal point)\r\n");
-clear_first_run;}   
+
+if ((just_programmed) || (r_prompt))
+{clear_resets;
+Serial.write ("Enter real number (i.e. with decimal point)\r\n");}
+
+else    
+
+Serial.write("\r\nAgain");
+
+
 
 dividend = Real_Num_from_PC(digits, &divisor, &decimal_places);     //Step 1
 Serial.write ('\t');Int_Num_to_PC_A(dividend, num_string, ' ');
