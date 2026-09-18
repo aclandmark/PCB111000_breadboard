@@ -16,14 +16,14 @@ setup_HW;
  _delay_ms(10);
  PRN_counter = 0;
  Random_num = PRN_16bit_GEN (0, &PRN_counter);
-  while (switch_3_up)wdr();
+  while (switch_1_up)wdr();
 
   PORT_1 = 1;
   PORT_2 = 0x8000;
   while (1)
   { while (1)
     { Timer_T0_10mS_delay_x_m(2);
-      while (switch_3_down)wdr();
+      while (switch_1_down)wdr();
 
       shift_PORT_1;
       shift_PORT_2;
@@ -33,8 +33,8 @@ setup_HW;
       { 
         
         Timer_T0_10mS_delay_x_m(35);
-        if (switch_3_down)break;
-        else while (switch_3_up)wdr();
+        if (switch_1_down)break;
+        else while (switch_1_up)wdr();
       }
 
       if (PORT_1 != PORT_2)
@@ -43,7 +43,7 @@ setup_HW;
       }
     }
 
-    while (switch_3_down)
+    while (switch_1_down)
     {
       flash_display;
     }
