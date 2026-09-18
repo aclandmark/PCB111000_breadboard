@@ -51,21 +51,21 @@ HoursL - '0') * 3600) + ((((MinsH - '0') * 10) + MinsL - '0') * 60) +
 (SecsH - '0') * 10 + SecsL - '0');}
 
 else{
-String_to_PC_Basic("Press 'R' to enter time or 'r' to start at time zero  "); 
-User_prompt_Basic;
+String_to_PC_B("Press 'R' to enter time or 'r' to start at time zero  "); 
+User_prompt_B;
 
 if(User_response == 'R'){set_time();}
 else {reset_clock_1; deci_SecsH = '0'; deci_SecsL = '0'; deci_sec_counter = 0; clear_display;}
 display_time(digits);
 
-String_to_PC_Basic("AK to start\r\n");
-waitforkeypress_Basic();}
+String_to_PC_B("AK to start\r\n");
+waitforkeypress_B();}
 
 UCSR0B &= (~(1 << RXEN0));
 sei();
 initialise_T2_Local();
 start_clock_Local();
-//Xtal_clock();
+
 
 display_time(digits);}
 
@@ -90,20 +90,20 @@ void set_time(void){
 
 for(int m = 0; m <= 7; m++)digits[m] = 0; 
 
-String_to_PC_Basic("Enter start time Hours, Minutes and Seconds\
+String_to_PC_B("Enter start time Hours, Minutes and Seconds\
 \r\n(24 hour clock with no spaces). Terminate with cr\r\n");
 for(int m = 0; m <= 7; m++)digits[m] = 0;clear_display;
-while(isCharavailable_Basic(50) == 0){String_to_PC_Basic("T?  ");}
+while(isCharavailable_B(50) == 0){String_to_PC_B("T?  ");}
 
-digits[7] = Char_from_PC_Basic();
+digits[7] = Char_from_PC_B();
 eeprom_write_byte((uint8_t*)EEP_Location--, digits[7]);
 display_time(digits); 
 
-for (int m = 0; m<=4; m++){while(isCharavailable_Basic(5) == 0);
-if(m == 4){digits[2] = Char_from_PC_Basic();
+for (int m = 0; m<=4; m++){while(isCharavailable_B(5) == 0);
+if(m == 4){digits[2] = Char_from_PC_B();
 eeprom_write_byte((uint8_t*)EEP_Location--, digits[2]);
 deci_SecsH = '0'; deci_SecsL = '0';}
-else {digits[6 - m] = Char_from_PC_Basic();
+else {digits[6 - m] = Char_from_PC_B();
 eeprom_write_byte((uint8_t*)EEP_Location--, digits[6 - m]);
 display_time(digits);}}
 
@@ -127,42 +127,6 @@ else
 
 
 /**********************************************************************************/
-/*void initialise_T2_Local(void){
-ASSR = (1 << AS2); 
-TCNT2 = 0;
-TCCR2A = 0;
-TCCR2B |= (1 << CS20) | (1 << CS21);
-OCR2B = 0;}*/
-
-/*void Xtal_clock(void){
-tick_counter = 0;
-clock_tick = 0;
-TCNT2 = 0;
-OCR2A = 102;
-OCR2B = 0;
-TCCR2A = 0; 
-TIMSK2 |= (1 << OCIE2A);
-ASSR = (1 << AS2);
-TCCR2B = (1 << CS20) | (1 << CS21);
-while (ASSR & (1 << TCR2BUB)); 
-}*/
-
-/**********************************************************************************/
-
-
-
-/**********************************************************************************/
-/*ISR (TIMER2_COMPA_vect){ char string[5];
-  OCR2A += 102;
-  clock_tick += 1;
-  tick_counter += 1;
-  if(tick_counter == 9){tick_counter = -1; while (ASSR & (1 << TCR2AUB));
-  OCR2A += 4;}
-   if(clock_tick == 2){clock_tick = 0;deci_sec_counter += 2;
-if(deci_sec_counter == 864000)deci_sec_counter = 0;
-Format_time_for_display();}}*/
-
-
 void initialise_T2_Local(void){
 ASSR = (1 << AS2); 
 TCNT2 = 0;
