@@ -17,4 +17,10 @@ The third version uses an Arduino Nano to provide the Atmega 328 + Arduino bootl
 Design and setup details are given under PCB111000_breadboard_V2
 
 
+All the Atmega devices are designed to operate as specified when loaded onto a pcb with a good ground plane.
+Full performance cannot be expected from assembly on plug in breedboard.
+In particular it was found that a watch crystal connected to the crystal port of an Atmega 328 failed to give good time keeping.
+Fortunately this issue was resolved by using an Atmega 168 in place of the 328.
+
+
 
